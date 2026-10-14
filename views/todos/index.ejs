@@ -1,0 +1,65 @@
+
+<%- include("../layouts/header", { title: "Your Tasks" }) %>
+
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">YOUR WORKSPACE</p>
+    <h1>Your tasks</h1>
+    <p class="subtitle">Keep track of what needs to get done.</p>
+  </div>
+
+  <a class="button" href="/todos/new">+ Add task</a>
+</section>
+
+<% if (todos.length === 0) { %>
+  <section class="empty-state">
+    <h2>No tasks yet</h2>
+    <p>Create your first task to get started.</p>
+    <a class="button" href="/todos/new">Create a task</a>
+  </section>
+<% } else { %>
+  <section class="task-list">
+    <% todos.forEach((todo) => { %>
+      <article class="task-card">
+        <div class="task-content">
+          <div class="task-title-row">
+            <h2 class="<%= todo.isCompleted ? 'completed' : '' %>">
+              <a href="/todos/<%= encodeURIComponent(todo.id) %>">
+                <%= todo.title %>
+              </a>
+            </h2>
+
+            <span class="status <%= todo.isCompleted ? 'status-complete' : 'status-pending' %>">
+              <%= todo.isCompleted ? "Completed" : "To do" %>
+            </span>
+          </div>
+
+          <% if (todo.description) { %>
+            <p class="task-description"><%= todo.description %></p>
+          <% } %>
+
+          <% if (todo.dueDate) { %>
+            <p class="task-meta">Due: <%= todo.dueDate %></p>
+          <% } %>
+        </div>
+
+        <div class="task-actions">
+          <a class="text-link" href="/todos/<%= encodeURIComponent(todo.id) %>">
+            View details
+          </a>
+
+          <form
+            method="POST"
+            action="/todos/<%= encodeURIComponent(todo.id) %>/completion"
+          >
+            <button class="button button-secondary" type="submit">
+              <%= todo.isCompleted ? "Reopen" : "Complete" %>
+            </button>
+          </form>
+        </div>
+      </article>
+    <% }); %>
+  </section>
+<% } %>
+
+<%- include("../layouts/footer") %>

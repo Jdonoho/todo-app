@@ -1,0 +1,66 @@
+
+<%- include("../layouts/header", { title: "Create a Task" }) %>
+
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">GET STARTED</p>
+    <h1>Create a task</h1>
+    <p class="subtitle">Add the details you'll need to get it done.</p>
+  </div>
+</section>
+
+<section class="form-card">
+  <% if (errors && errors.length > 0) { %>
+    <div class="error-box" role="alert">
+      <p>Please fix the following:</p>
+      <ul>
+        <% errors.forEach((error) => { %>
+          <li><%= error %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form action="/todos" method="POST">
+    <div class="form-field">
+      <label for="title">Title <span aria-hidden="true">*</span></label>
+      <input
+        id="title"
+        name="title"
+        type="text"
+        maxlength="200"
+        required
+        value="<%= formData.title || '' %>"
+        placeholder="e.g. Finish project proposal"
+      >
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="5"
+        maxlength="2000"
+        placeholder="Add any helpful details..."
+      ><%= formData.description || '' %></textarea>
+    </div>
+
+    <div class="form-field">
+      <label for="dueDate">Due date</label>
+      <input
+        id="dueDate"
+        name="dueDate"
+        type="date"
+        value="<%= formData.dueDate || '' %>"
+      >
+    </div>
+
+    <div class="form-actions">
+      <button class="button" type="submit">Create task</button>
+      <a class="text-link" href="/todos">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<%- include("../layouts/footer") %>
