@@ -9,7 +9,7 @@ import {
 
 
 function getTodoId(req: Request): string {
-  const id = getTodoId(req);
+  const id = req.params.id;
 
   if (typeof id !== "string") {
     throw new Error("Invalid todo ID.");
