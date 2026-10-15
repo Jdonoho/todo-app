@@ -329,3 +329,95 @@ h1 {
     padding: 18px;
   }
 }
+
+
+/* Accessibility: make keyboard focus easy to see */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* Consistent form controls */
+input,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #2563eb;
+}
+
+/* Clear visual separation for task information */
+.task-card,
+.form-card {
+  overflow-wrap: anywhere;
+}
+
+.task-card h2,
+.task-card h3 {
+  margin-top: 0;
+}
+
+.task-card p {
+  line-height: 1.6;
+}
+
+/* Keep action controls aligned and usable */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.form-actions form {
+  margin: 0;
+}
+
+button,
+.button {
+  min-height: 44px;
+}
+
+/* Prevent long titles from breaking the layout */
+.page-heading h1 {
+  overflow-wrap: anywhere;
+}
+
+/* Comfortable layout on smaller screens */
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 2rem, 1100px);
+  }
+
+  .page-heading {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .form-actions {
+    align-items: stretch;
+  }
+
+  .form-actions > *,
+  .form-actions form,
+  .form-actions form button {
+    max-width: 100%;
+  }
+}
