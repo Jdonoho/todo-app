@@ -1,0 +1,75 @@
+
+<%- include("../layouts/header", { title: "Edit Task" }) %>
+
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">UPDATE TASK</p>
+    <h1>Edit task</h1>
+    <p class="subtitle">Make changes to your task details below.</p>
+  </div>
+
+  <a class="button button-secondary" href="/todos/<%= encodeURIComponent(todo.id) %>">
+    Cancel
+  </a>
+</div>
+
+<% if (errors.length > 0) { %>
+  <div class="error-box" role="alert">
+    <p>Please fix the following issues:</p>
+    <ul>
+      <% errors.forEach((error) => { %>
+        <li><%= error %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<form
+  class="form-card"
+  method="POST"
+  action="/todos/<%= encodeURIComponent(todo.id) %>/edit"
+>
+  <div class="form-field">
+    <label for="title">Title <span aria-hidden="true">*</span></label>
+    <input
+      id="title"
+      name="title"
+      type="text"
+      maxlength="200"
+      required
+      value="<%= formData.title ?? "" %>"
+    >
+  </div>
+
+  <div class="form-field">
+    <label for="description">Description</label>
+    <textarea
+      id="description"
+      name="description"
+      rows="5"
+      maxlength="2000"
+    ><%= formData.description ?? "" %></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="dueDate">Due date</label>
+    <input
+      id="dueDate"
+      name="dueDate"
+      type="date"
+      value="<%= formData.dueDate ?? "" %>"
+    >
+  </div>
+
+  <div class="form-actions">
+    <button class="button" type="submit">Save changes</button>
+    <a
+      class="button button-secondary"
+      href="/todos/<%= encodeURIComponent(todo.id) %>"
+    >
+      Cancel
+    </a>
+  </div>
+</form>
+
+<%- include("../layouts/footer") %>
