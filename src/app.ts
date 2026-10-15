@@ -11,7 +11,9 @@ import { JsonTodoRepository } from "./repositories/json-todo.repository";
 import { createTodoRoutes } from "./routes/todo.routes";
 import { TodoService } from "./services/todo.service";
 
-export function createApp() {
+export function createApp(
+  dataFilePath = path.join(process.cwd(), "data", "todos.json")
+) {
   const app = express();
 
   app.set("view engine", "ejs");
@@ -20,9 +22,7 @@ export function createApp() {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(process.cwd(), "public")));
 
-  const repository = new JsonTodoRepository(
-    path.join(process.cwd(), "data", "todos.json")
-  );
+  const repository = new JsonTodoRepository(dataFilePath);
 
   const service = new TodoService(repository);
   const controller = new TodoController(service);
