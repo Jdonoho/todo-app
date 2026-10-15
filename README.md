@@ -58,6 +58,33 @@ The application creates `data/todos.json` when task storage is first accessed if
 | `npm test` | Run the automated test suite. |
 | `npm run test:watch` | Run tests in watch mode. |
 
+## Production Build
+
+Compile the application:
+
+```bash
+npm run build
+```
+
+Then start the compiled server:
+
+```bash
+npm start
+```
+
+The application uses port `3000` by default and supports the `PORT` environment variable to override it.
+
+## Testing
+
+Run the complete test suite:
+
+```bash
+npm test
+```
+
+The tests cover validation, repository persistence, service behavior, and HTTP workflows such as creating, editing, completing, and deleting tasks.
+
+
 ## Task Data Model
 
 Each task contains the following fields:
@@ -93,34 +120,26 @@ This structure keeps business logic separate from Express-specific request handl
 - **Stable task metadata:** Editing a task does not reset its completion state or creation timestamp.
 - **No unnecessary features:** The implementation focuses on the requested task-management workflows rather than authentication, advanced filtering, pagination, or a separate API.
 
-## Testing
-
-Run the complete test suite:
-
-```bash
-npm test
-```
-
-The tests cover validation, repository persistence, service behavior, and HTTP workflows such as creating, editing, completing, and deleting tasks.
-
 ## Limitations
 
 - JSON file storage is intended for a small, single-process application. It is not designed for multi-process concurrent writes or production-scale workloads.
 - The application does not include user accounts or per-user task separation.
 - The interface uses standard server-rendered forms rather than a separate single-page application.
 
-## Production Build
+## Additional Tradeoffs & Future Improvements
 
-Compile the application:
+I wanted to keep this project simple while making sure it was organized in a way that would be easy to maintain and build on later.
 
-```bash
-npm run build
-```
+- **JSON file storage:** I used a JSON file to store tasks so the app would be easy to set up and run without needing a database. If the app grew, I would consider moving to a database like PostgreSQL.
 
-Then start the compiled server:
+- **Handling multiple writes:** The repository handles write operations one at a time within a single instance to help prevent data from being overwritten. If the app needed to run across multiple servers, I would use a database to handle that more reliably.
 
-```bash
-npm start
-```
+- **Simple frontend:** I used EJS templates and standard HTML forms instead of adding a frontend framework. This keeps things straightforward and was enough for the features required in the assignment.
 
-The application uses port `3000` by default and supports the `PORT` environment variable to override it.
+- **Validation and error handling:** I used Zod to validate user input and added centralized error handling for unexpected errors. For a larger application, I would also add more detailed logging and monitoring.
+
+- **Testing:** I added unit tests for the main logic and integration tests for the application routes. If I continued developing the project, I would consider adding browser-based tests to cover the full user experience.
+
+- **User accounts:** I left out authentication and user accounts because they weren't part of the assignment. If the app needed to support multiple users, I would add login functionality and make sure each user could only access their own tasks.
+
+These decisions helped keep the project focused on the requirements while leaving room to expand it in the future.
