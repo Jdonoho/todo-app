@@ -1,0 +1,66 @@
+
+<%- include("../layouts/header", { title: todo.title }) %>
+
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">TASK DETAILS</p>
+    <h1><%= todo.title %></h1>
+    <p class="subtitle">
+      <%= todo.isCompleted ? "This task is completed." : "This task is still to do." %>
+    </p>
+  </div>
+
+  <a class="button button-secondary" href="/todos">Back to tasks</a>
+</div>
+
+<section class="form-card">
+  <div class="task-title-row">
+    <h2>Task information</h2>
+
+    <span class="status <%= todo.isCompleted ? 'status-complete' : 'status-pending' %>">
+      <%= todo.isCompleted ? "Completed" : "To do" %>
+    </span>
+  </div>
+
+  <div class="form-field">
+    <label>Description</label>
+    <p><%= todo.description || "No description provided." %></p>
+  </div>
+
+  <div class="form-field">
+    <label>Due date</label>
+    <p><%= todo.dueDate || "No due date set." %></p>
+  </div>
+
+  <div class="form-field">
+    <label>Created</label>
+    <p><%= new Date(todo.createdAt).toLocaleString() %></p>
+  </div>
+
+  <div class="form-actions">
+    <a class="button" href="/todos/<%= encodeURIComponent(todo.id) %>/edit">
+      Edit task
+    </a>
+
+    <form
+      method="POST"
+      action="/todos/<%= encodeURIComponent(todo.id) %>/completion"
+    >
+      <button class="button button-secondary" type="submit">
+        <%= todo.isCompleted ? "Reopen task" : "Mark complete" %>
+      </button>
+    </form>
+
+    <form
+      method="POST"
+      action="/todos/<%= encodeURIComponent(todo.id) %>/delete"
+      onsubmit="return confirm('Are you sure you want to delete this task?');"
+    >
+      <button class="button button-secondary" type="submit">
+        Delete task
+      </button>
+    </form>
+  </div>
+</section>
+
+<%- include("../layouts/footer") %>
